@@ -43,3 +43,6 @@
 - 本文
 - 評価（1〜5の星評価）
 - 作成日
+
+## ER図
+[![Image from Gyazo](https://i.gyazo.com/78742176017bf118422178a11463879b.png)](https://gyazo.com/78742176017bf118422178a11463879b)
