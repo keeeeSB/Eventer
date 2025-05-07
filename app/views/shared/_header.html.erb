@@ -1,0 +1,26 @@
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+  <div class="col-md-3 mb-2 mb-md-0">
+    <%= link_to root_path, class: "d-inline-flex link-body-emphasis text-decoration-none ms-4" do %>
+      <%= image_tag "icon.png", alt: "アイコン", width: 40, height: 40 %>
+    <% end %>
+  </div>
+
+  <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <% if user_signed_in? %>
+      <li><%= link_to "ホーム", "#", class: "nav-link px-2 link-secondary" %></li>
+    <% else %>
+      <li><%= link_to "ホーム", root_path, class: "nav-link px-2 link-secondary" %></li>
+    <% end %>
+  </ul>
+
+  <div class="col-md-3 text-end">
+    <% if user_signed_in? %>
+      <%= link_to "プロフィール", current_user, class: "btn btn-outline-secondary btn-sm me-2" %>
+      <%= link_to "ログアウト", destroy_user_session_path,
+                              data: { turbo_method: :delete }, class: "btn btn-outline-danger btn-sm me-4" %>
+    <% else %>
+      <%= link_to "新規登録", new_user_registration_path, class: "btn btn-outline-success btn-sm me-2" %>
+      <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-info btn-sm me-4" %>
+    <% end %>
+  </div>
+</header>
