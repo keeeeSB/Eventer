@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="card-header text-center">
+    <h2><%= @user.name %>さんのプロフィール</h2>
+  </div>
+  <div class="card-body">
+    <div class="text-center mb-4">
+      <% if @user.profile_image.present? %>
+        <%= image_tag @user.profile_image.url, class: "img-thumbnail profile-image", alt: "#{@user.name}のプロフィール画像" %>
+      <% else %>
+        <%= image_tag "icon.png", class: "img-thumbnail profile-image", alt: "デフォルトのプロフィール画像" %>
+      <% end %>
+    </div>
+    <p><strong>お名前:</strong> <%= @user.name %></p>
+    <p><strong>メールアドレス:</strong> <%= @user.email %></p>
+    <p><strong>自己紹介:</strong></p>
+    <p><%= @user.bio.presence || "自己紹介はありません。" %></p>
+  </div>
+</div>
