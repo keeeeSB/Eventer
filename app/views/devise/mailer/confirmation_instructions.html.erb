@@ -1,0 +1,6 @@
+<div class="container">
+  <h2>ようこそ、<%= @email %> さん！</h2>
+  <p>ご登録いただきありがとうございます。以下のボタンをクリックして、メールアドレスを確認してください。</p>
+  <%= link_to "アカウントを確認する", confirmation_url(@resource, confirmation_token: @token), class: "btn" %>
+  <p>このメールに心当たりがない場合は、無視していただいて構いません。</p>
+</div>
