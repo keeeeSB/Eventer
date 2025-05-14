@@ -5,5 +5,5 @@ class User < ApplicationRecord
   mount_uploader :profile_image, ProfileImageUploader
 
   validates :name, presence: true
-  validates :bio, presence: true, length: { maximum: 50 }
+  validates :bio, length: { maximum: 50 }
 end
