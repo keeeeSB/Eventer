@@ -1,0 +1,52 @@
+class EventsController < ApplicationController
+  def index
+    @events = Event.includes(:user).order(start_time: :asc)
+  end
+
+  def new
+    @event = current_user.events.build
+  end
+
+  def create
+    @event = current_user.events.build(event_params)
+    if @event.save
+      flash[:success] = "イベントを作成しました。"
+      redirect_to events_path
+    else
+      flash.now[:danger] = "イベントを作成できませんでした。"
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def show
+    @event = current_user.events.find(params[:id])
+  end
+
+  def edit
+    @event = current_user.events.find(params[:id])
+  end
+
+  def update
+    @event = current_user.events.find(params[:id])
+    if @event.update(event_params)
+      flash[:success] = "イベント内容を更新しました。"
+      redirect_to events_path
+    else
+      flash.now[:danger] = "イベント内容を更新できませんでした。"
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @event = current_user.events.find(params[:id])
+    @event.destroy!
+    flash[:success] = "イベントを削除しました。"
+    redirect_to events_path
+  end
+
+  private
+
+    def event_params
+      params.require(:event).permit(:title, :description, :start_time, :location)
+    end
+end
