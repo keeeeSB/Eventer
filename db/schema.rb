@@ -21,8 +21,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_15_000017) do
   create_table "events", force: :cascade do |t|
     t.string "title", null: false
     t.text "description", null: false
-    t.datetime "strat_time", null: false
-    t.string "place", null: false
+    t.datetime "start_time", null: false
+    t.string "location", null: false
     t.integer "user_id", null: false
     t.integer "category_id", null: false
     t.datetime "created_at", null: false
