@@ -23,7 +23,7 @@ RSpec.describe "ユーザー登録機能", type: :system do
 
     aggregate_failures do
       expect(mail.to).to eq [ "tester@example.com" ]
-      expect(mail.from).to eq [ "eveter@example.com" ]
+      expect(mail.from).to eq [ "eventer@example.com" ]
       expect(mail.subject).to eq "メールアドレス確認メール"
     end
   end
