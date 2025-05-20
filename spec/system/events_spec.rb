@@ -10,18 +10,20 @@ RSpec.describe "イベント機能", type: :system do
   end
 
   scenario "ユーザーはイベントを作成できる" do
-    expect {
+    expect { 
       click_link "イベント作成"
       fill_in "タイトル", with: "花火大会"
       fill_in "説明文", with: "みんなで夏を感じましょう！"
       fill_in "開催日時", with: "2025-07-07"
       fill_in "開催場所", with: "河川敷"
+      select "夏", from: "カテゴリーを選択"
       click_button "作成"
 
       aggregate_failures do
         expect(page).to have_content "イベントを作成しました。"
         expect(page).to have_content "花火大会"
         expect(page).to have_content "#{user.name}"
+        expect(page).to have_content "夏"
       end
     }.to change(user.events, :count).by(1)
   end
