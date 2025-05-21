@@ -1,10 +1,12 @@
 class EventsController < ApplicationController
   def index
-    @events = Event.includes(:user).order(start_time: :asc)
+    @events = Event.includes(:user, :category).order(start_time: :asc)
   end
 
   def new
     @event = current_user.events.build
+    @event.build_category
+    @categories = Category.all
   end
 
   def create
@@ -47,6 +49,7 @@ class EventsController < ApplicationController
   private
 
     def event_params
-      params.require(:event).permit(:title, :description, :start_time, :location)
+      params.require(:event).permit(:title, :description, :start_time, :location,
+                                    :category_id, categiry_attributes: [ :name ])
     end
 end
