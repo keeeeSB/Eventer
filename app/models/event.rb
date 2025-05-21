@@ -9,6 +9,14 @@ class Event < ApplicationRecord
   validates :start_time, presence: true
   validates :location, presence: true
 
+  def self.build_with_category_handling(user, params)
+    if params[:category_id].present?
+      user.events.build(params.except(:category_attributes))
+    else
+      user.events.build(params)
+    end
+  end
+
   private
 
     def category_blank?(attributes)

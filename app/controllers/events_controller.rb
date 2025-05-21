@@ -10,7 +10,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = current_user.events.build(event_params)
+    @event = Event.build_with_category_handling(current_user, event_params)
     if @event.save
       flash[:success] = "イベントを作成しました。"
       redirect_to events_path
@@ -50,6 +50,6 @@ class EventsController < ApplicationController
 
     def event_params
       params.require(:event).permit(:title, :description, :start_time, :location,
-                                    :category_id, categiry_attributes: [ :name ])
+                                    :category_id, category_attributes: [ :name ])
     end
 end
