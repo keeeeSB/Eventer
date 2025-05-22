@@ -1,2 +1,35 @@
-<h1>Events#show</h1>
-<p>Find me in app/views/events/show.html.erb</p>
+<div class="card shadow-lg rounded-4 mb-5 border-0 bg-light">
+  <div class="card-body px-5 py-4 text-center">
+    <h2 class="fw-bold text-dark mb-4">
+      <%= @event.title %>
+    </h2>
+
+    <p class="text-muted mb-4">
+      <i class="bi bi-calendar-event me-1 fs-5 text-primary"></i>
+      <%= @event.start_time.strftime("%Y年%m月%d日 %H:%M") %>
+    </p>
+
+    <p class="text-muted mb-4">
+      <i class="bi bi-geo-alt-fill me-1 fs-5 text-danger"></i>
+      <%= @event.location.presence || "場所未定" %>
+    </p>
+
+    <div class="text-body s-5 mb-4 px-3">
+      <%= simple_format(@event.description) %>
+    </div>
+
+    <span class="badge bg-secondary text-white px-3 py-2 rounded-pill me-3">
+      <i class="bi bi-person"></i>
+      作成者: <%= @event.user.name || @event.user.email %>
+    </span>
+
+    <span class="badge bg-info text-dark px-3 py-2 rounded-pill">
+      <i class="bi bi-tag"></i>
+      <%= @event.category.name %>
+    </span>
+  </div>
+</div>
+
+<div class="text-center">
+  <%= link_to "イベント一覧に戻る", events_path, class: "btn btn-outline-primary rounded-pill px-4" %>
+</div>

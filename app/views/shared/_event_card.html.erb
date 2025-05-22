@@ -1,7 +1,9 @@
 <div class="card shadow-sm rounded-4 mb-4">
   <div class="card-body text-center">
     <h4 class="card-title fw-bold mb-3">
-      <%= event.title %>
+      <%= link_to user_event_path(event.user, event), class: "text-dark" do %>
+        <%= event.title %>
+      <% end %>
     </h4>
 
     <p class="card-text text-muted mb-2">
