@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  before_action :set_event, only: [ :show, :edit, :update, :destroy ]
+
   def index
     @events = Event.includes(:user, :category).order(start_time: :asc)
   end
@@ -12,37 +14,39 @@ class EventsController < ApplicationController
   def create
     @event = Event.build_with_category_handling(current_user, event_params)
     if @event.save
-      flash[:success] = "イベントを作成しました。"
+      flash[:notice] = "イベントを作成しました。"
       redirect_to events_path
     else
       flash.now[:danger] = "イベントを作成できませんでした。"
+      @event.build_category
+      @categories = Category.all
       render :new, status: :unprocessable_entity
     end
   end
 
   def show
-    @event = current_user.events.find(params[:id])
   end
 
   def edit
-    @event = current_user.events.find(params[:id])
+    @event.build_category
+    @categories = Category.all
   end
 
   def update
-    @event = current_user.events.find(params[:id])
     if @event.update(event_params)
-      flash[:success] = "イベント内容を更新しました。"
+      flash[:notice] = "イベント内容を更新しました。"
       redirect_to events_path
     else
       flash.now[:danger] = "イベント内容を更新できませんでした。"
+      @event.build_category
+      @categories = Category.all
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @event = current_user.events.find(params[:id])
     @event.destroy!
-    flash[:success] = "イベントを削除しました。"
+    flash[:notice] = "イベントを削除しました。"
     redirect_to events_path
   end
 
@@ -51,5 +55,9 @@ class EventsController < ApplicationController
     def event_params
       params.require(:event).permit(:title, :description, :start_time, :location,
                                     :category_id, category_attributes: [ :name ])
+    end
+
+    def set_event
+      @event = current_user.events.find(params[:id])
     end
 end
