@@ -46,4 +46,35 @@ RSpec.describe "イベント機能", type: :system do
       end
     }.to change(user.events, :count).by(1)
   end
+
+  scenario "ユーザーは自身が作成したイベントを編集できる" do
+    event = FactoryBot.create(:event, user: user, title: "旧タイトル")
+    visit events_path
+    expect(page).to have_content "旧タイトル"
+
+    visit user_event_path(user, event)
+    click_link "編集"
+    fill_in "タイトル", with: "新タイトル"
+    fill_in "新しいカテゴリーを作成", with: "新カテゴリー"
+    click_button "更新"
+
+    aggregate_failures do
+      expect(page).to have_content "イベント内容を更新しました。"
+      expect(page).to have_content "新タイトル"
+      expect(page).to have_content "新カテゴリー"
+    end
+  end
+
+  scenario "ユーザーは自身が作成したイベントを削除できる" do
+    event = FactoryBot.create(:event, user: user, title: "削除対象イベント")
+    visit events_path
+    expect(page).to have_content "削除対象イベント"
+
+    visit user_event_path(user, event)
+
+    expect {
+      click_link "削除"
+      expect(page).to have_content "イベントを削除しました。"
+    }.to change(user.events, :count).by(-1)
+  end
 end
