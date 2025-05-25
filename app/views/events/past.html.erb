@@ -1,0 +1,9 @@
+<h2 class="text-center mb-4">開催済みイベント一覧</h2>
+
+<div class="text-center mb-5">
+  <%= link_to "未開催のイベントはこちら", upcoming_events_path, class: "btn btn-outline-secondary" %>
+</div>
+
+<% @events.each do |event| %>
+  <%= render "shared/event_card", event: event %>
+<% end %>
