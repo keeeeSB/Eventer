@@ -7,7 +7,7 @@
 
   <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
     <% if user_signed_in? %>
-      <li><%= link_to "ホーム", events_path, class: "nav-link px-2 link-secondary fw-bold" %></li>
+      <li><%= link_to "ホーム", upcoming_events_path, class: "nav-link px-2 link-secondary fw-bold" %></li>
       <li><%= link_to "イベント作成", new_user_event_path(current_user), class: "nav-link px-2 link-success fw-bold" %></li>
     <% else %>
       <li><%= link_to "ホーム", root_path, class: "nav-link px-2 link-secondary" %></li>

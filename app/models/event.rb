@@ -4,6 +4,9 @@ class Event < ApplicationRecord
 
   accepts_nested_attributes_for :category, reject_if: :category_blank?
 
+  scope :upcoming, -> { where("start_time >= ?", Time.current).order(start_time: :asc) }
+  scope :past,     -> { where("start_time < ?", Time.current).order(start_time: :desc) }
+
   validates :title, presence: true, length: { maximum: 30 }
   validates :description, presence: true, length: { maximum: 100 }
   validates :start_time, presence: true
