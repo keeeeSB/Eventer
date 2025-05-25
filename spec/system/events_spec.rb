@@ -49,7 +49,7 @@ RSpec.describe "イベント機能", type: :system do
 
   scenario "ユーザーは自身が作成したイベントを編集できる" do
     event = FactoryBot.create(:event, user: user, title: "旧タイトル")
-    visit events_path
+    visit upcoming_events_path
     expect(page).to have_content "旧タイトル"
 
     visit user_event_path(user, event)
@@ -67,7 +67,7 @@ RSpec.describe "イベント機能", type: :system do
 
   scenario "ユーザーは自身が作成したイベントを削除できる" do
     event = FactoryBot.create(:event, user: user, title: "削除対象イベント")
-    visit events_path
+    visit upcoming_events_path
     expect(page).to have_content "削除対象イベント"
 
     visit user_event_path(user, event)

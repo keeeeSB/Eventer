@@ -19,7 +19,7 @@ class EventsController < ApplicationController
     @event = Event.build_with_category_handling(current_user, event_params)
     if @event.save
       flash[:notice] = "イベントを作成しました。"
-      redirect_to events_path
+      redirect_to upcoming_events_path
     else
       flash.now[:danger] = "イベントを作成できませんでした。"
       @event.build_category
@@ -39,7 +39,7 @@ class EventsController < ApplicationController
   def update
     if @event.update(event_params)
       flash[:notice] = "イベント内容を更新しました。"
-      redirect_to events_path
+      redirect_to upcoming_events_path
     else
       flash.now[:danger] = "イベント内容を更新できませんでした。"
       @event.build_category
@@ -51,7 +51,7 @@ class EventsController < ApplicationController
   def destroy
     @event.destroy!
     flash[:notice] = "イベントを削除しました。"
-    redirect_to events_path
+    redirect_to upcoming_events_path
   end
 
   private
