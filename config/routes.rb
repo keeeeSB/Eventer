@@ -9,5 +9,6 @@ Rails.application.routes.draw do
       get :upcoming
       get :past
     end
+    resources :reviews, only: [ :create, :edit, :update, :destroy ]
   end
 end
