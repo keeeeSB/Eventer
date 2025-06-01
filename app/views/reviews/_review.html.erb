@@ -1,25 +1,27 @@
-<div class="card mb-3">
-  <div class="card-body">
-    <p><strong><%= review.user.name %></strong> - <%= review.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
-    <div class="star-display mb-3">
-      <% 5.times do |i| %>
-        <% if i < review.rating %>
-          <span class="star filled">★</span>
-        <% else %>
-          <span class="star">★</span>
+<%= turbo_frame_tag "review_#{review.id}" do %>
+  <div class="card mb-3">
+    <div class="card-body">
+      <p><strong><%= review.user.name %></strong> - <%= review.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
+      <div class="star-display mb-3">
+        <% 5.times do |i| %>
+          <% if i < review.star_rating %>
+            <span class="star filled">★</span>
+          <% else %>
+            <span class="star">★</span>
+          <% end %>
         <% end %>
+      </div>
+      <p><%= review.body %></p>
+      <% if review.user == current_user %>
+        <div class="d-flex justify-content-end">
+          <%= link_to "編集", edit_event_review_path(event, review),
+                             data: { turbo_frame: "review_#{review.id}" },
+                             class: "btn btn-sm btn-outline-warning me-2" %>
+          <%= link_to "削除", event_review_path(event, review), 
+                              data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
+                              class: "btn btn-sm btn-outline-danger" %>
+        </div>
       <% end %>
     </div>
-    <p><%= review.body %></p>
-    <% if review.user == current_user %>
-      <div class="d-flex justify-content-end">
-        <%= link_to "編集", edit_event_review_path(event, review),
-                            data: { turbo_frame: "review_#{review.id}" },
-                            class: "btn btn-sm btn-outline-warning me-2" %>
-        <%= link_to "削除", event_review_path(event, review), 
-                            data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
-                            class: "btn btn-sm btn-outline-danger" %>
-      </div>
-    <% end %>
   </div>
-</div>
+<% end %>

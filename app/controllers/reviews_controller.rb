@@ -9,12 +9,23 @@ class ReviewsController < ApplicationController
   end
 
   def edit
+    render partial: "reviews/edit_form", locals: { review: @review, event: @event }
   end
 
   def update
-    @review.update!(review_params)
-    flash[:notice] = "レビューを更新しました。"
-    redirect_to user_event_path(@event.user, @event)
+    if @review.update(review_params)
+      respond_to do |format|
+        format.turbo_stream
+        format.html do
+          flash[:notice] = "レビューを更新しました。"
+          redirect_to user_event_path(@event.user, @event)
+        end
+      end
+    else
+      render partial: "reviews/edit_form",
+             status: :unprocessable_entity,
+             locals: { review: @review, event: @event }
+    end
   end
 
   def destroy
@@ -26,7 +37,7 @@ class ReviewsController < ApplicationController
   private
 
     def review_params
-      params.require(:review).permit(:body, :star_rating)
+      params.require(:review).permit(:body, :star_rating).merge(event_id: params[:event_id])
     end
 
     def set_review

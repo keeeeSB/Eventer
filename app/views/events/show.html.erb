@@ -52,7 +52,7 @@
 <div class="mb-4">
   <% if @event.reviews.any? %>
     <h4 class="mb-3">レビュー</h4>
-    <%= @event.reviews.each do |review| %>
+    <% @event.reviews.each do |review| %>
       <%= render "reviews/review", event: @event, review: review %>
     <% end %>
   <% end %>
