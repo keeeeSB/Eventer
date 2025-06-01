@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_26_193105) do
 
   create_table "reviews", force: :cascade do |t|
     t.text "body", null: false
-    t.string "star_rating", null: false
+    t.integer "star_rating", null: false
     t.integer "user_id", null: false
     t.integer "event_id", null: false
     t.datetime "created_at", null: false
