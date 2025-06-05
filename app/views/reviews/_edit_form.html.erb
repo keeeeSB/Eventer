@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "review_#{review.id}" do %>
-  <%= form_with(model: review, data: { turbo_frame: "review_#{review.id}"}) do |f| %>
+  <%= form_with(model: review, url: event_review_path(event, review), data: { turbo_frame: "review_#{review.id}"}) do |f| %>
     <div class="mb-3">
       <%= f.label :star_rating, "評価(1~5)", class: "form-label" %>
       <div class="star-rating">

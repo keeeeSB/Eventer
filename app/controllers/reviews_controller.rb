@@ -14,17 +14,11 @@ class ReviewsController < ApplicationController
 
   def update
     if @review.update(review_params)
-      respond_to do |format|
-        format.turbo_stream
-        format.html do
-          flash[:notice] = "レビューを更新しました。"
-          redirect_to user_event_path(@event.user, @event)
-        end
-      end
+      flash[:notice] = "レビューを更新しました。"
+      redirect_to user_event_path(@event.user, @event)
     else
-      render partial: "reviews/edit_form",
-             status: :unprocessable_entity,
-             locals: { review: @review, event: @event }
+      flash.now[:danger] = "レビューを更新できませんでした。"
+      render :edit, status: :unprocessable_entity
     end
   end
 
