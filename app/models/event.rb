@@ -22,6 +22,10 @@ class Event < ApplicationRecord
     end
   end
 
+  def finished?
+    start_time < Time.current
+  end
+
   private
 
     def category_blank?(attributes)

@@ -40,20 +40,22 @@
   </div>
 </div>
 
-<div class="mb-4">
-  <h4 class="mb-3">レビューを投稿する</h4>
-  <% if current_user.reviews.any? %>
-    <p class="text-center">既にレビュー済みです。</p>
-  <% else %>
-    <%= render "reviews/form" %>
-  <% end %>
-</div>
-
-<div class="mb-5">
-  <% if @event.reviews.any? %>
-    <h4 class="mb-3">レビュー</h4>
-    <% @event.reviews.each do |review| %>
-      <%= render "reviews/review", event: @event, review: review %>
+<% if @event.finished? %>
+  <div class="mb-4">
+    <h4 class="mb-3">レビューを投稿する</h4>
+    <% if current_user.reviews.any? %>
+      <p class="text-center">既にレビュー済みです。</p>
+    <% else %>
+      <%= render "reviews/form" %>
     <% end %>
-  <% end %>
-</div>
+  </div>
+
+  <div class="mb-5">
+    <% if @event.reviews.exists?(event: @event) %>
+      <h4 class="mb-3">レビュー</h4>
+      <% @event.reviews.each do |review| %>
+        <%= render "reviews/review", event: @event, review: review %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
