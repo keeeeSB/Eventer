@@ -1,4 +1,6 @@
 <%= form_with(model: @review, url: event_reviews_path(@event), local: true, scope: :review) do |f| %>
+  <%= render "shared/error_messages", object: @review %>
+  
   <div class="mb-3">
     <%= f.label :star_rating, "評価(1~5)", class: "form-label" %>
     <div class="star-rating">

@@ -18,7 +18,14 @@ class ReviewsController < ApplicationController
       redirect_to user_event_path(@event.user, @event)
     else
       flash.now[:danger] = "レビューを更新できませんでした。"
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream do
+          render partial: "reviews/edit_form", formats: [ :html ], locals: { review: @review, event: @event }, status: :unprocessable_entity
+        end
+        format.html do
+          render partial: "reviews/edit_form", locals: { review: @review, event: @event }, status: :unprocessable_entity
+        end
+      end
     end
   end
 
