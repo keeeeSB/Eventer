@@ -1,6 +1,8 @@
 class Event < ApplicationRecord
   belongs_to :user
   belongs_to :category
+  has_many :reviews, dependent: :destroy
+  has_many :reviewers, through: :reviews, source: :user
 
   accepts_nested_attributes_for :category, reject_if: :category_blank?
 
@@ -18,6 +20,10 @@ class Event < ApplicationRecord
     else
       user.events.build(params)
     end
+  end
+
+  def finished?
+    start_time < Time.current
   end
 
   private

@@ -1,0 +1,24 @@
+<%= form_with(model: @review, url: event_reviews_path(@event), local: true, scope: :review) do |f| %>
+  <%= render "shared/error_messages", object: @review %>
+  
+  <div class="mb-3">
+    <%= f.label :star_rating, "評価(1~5)", class: "form-label" %>
+    <div class="star-rating">
+      <% 5.downto(1) do |i| %>
+        <%= f.radio_button :star_rating, i, id: "star#{i}" %>
+        <label for="star<%= i %>" class="star">
+          ★
+        </label>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :body, "コメント", class: "form-label" %>
+    <%= f.text_area :body, rows: 3, class: "form-control" %>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <%= f.submit "投稿", class: "btn btn-primary" %>
+  </div>
+<% end %>
